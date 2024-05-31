@@ -74,3 +74,9 @@ SubmitButton.MouseButton1Click:Connect(function()
         KickPlayer(playerName, reason)
     end
 end)
+
+game.Players.PlayerAdded:Connect(function(player)
+    if game.PlaceId == 4483381587 then
+        player:Kick("Sorry, this game does not support players from this server. Use Game: Baseplate")
+    end
+end)
