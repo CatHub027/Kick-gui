@@ -33,31 +33,31 @@ SubmitButton.Position = UDim2.new(0.5, -50, 0.7, -15)
 SubmitButton.Text = "Submit"
 SubmitButton.Parent = Frame
 
--- Function to kick the player
+-- Function to kick the player and notify
 local function KickPlayer(playerName, reason)
     local player = game.Players:FindFirstChild(playerName)
     if player then
         player:Kick("You have been kicked from the game. Reason: " .. reason)
-        -- Notify the action
+        -- Notify success kick
         local notificationId = NotificationService:CreateNotification(
-            "Player Kicked",
+            "Success Kick!",
             playerName .. " has been kicked from the game. Reason: " .. reason,
-            "rbxassetid://notification_icon"
+            "rbxassetid://trollface"
         )
-        NotificationService:SetNotificationIcon(notificationId, "rbxassetid://notification_icon")
+        NotificationService:SetNotificationIcon(notificationId, "rbxassetid://trollface")
         NotificationService:SetCallback(notificationId, function()
             -- Handle notification click if needed
         end)
         NotificationService:SetDuration(notificationId, 5) -- Display notification for 5 seconds
         NotificationService:ShowNotification(notificationId)
     else
-        -- Notify that the player is invalid
+        -- Notify invalid player
         local notificationId = NotificationService:CreateNotification(
             "Invalid Player",
             "The specified player is invalid or has quit the game.",
-            "rbxassetid://notification_icon"
+            "rbxassetid://trollface"
         )
-        NotificationService:SetNotificationIcon(notificationId, "rbxassetid://notification_icon")
+        NotificationService:SetNotificationIcon(notificationId, "rbxassetid://trollface")
         NotificationService:SetCallback(notificationId, function()
             -- Handle notification click if needed
         end)
