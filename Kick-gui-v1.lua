@@ -1,11 +1,14 @@
+-- Define the notification service
+local NotificationService = game:GetService("NotificationService")
+
 -- Create a ScreenGui
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
 
 -- Create a Frame
 local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, 200, 0, 150)
-Frame.Position = UDim2.new(0.5, -100, 0.5, -75)
+Frame.Size = UDim2.new(0, 200, 0, 200)
+Frame.Position = UDim2.new(0.5, -100, 0.5, -100)
 Frame.BackgroundColor3 = Color3.new(1, 1, 1)
 Frame.Parent = ScreenGui
 
@@ -35,8 +38,31 @@ local function KickPlayer(playerName, reason)
     local player = game.Players:FindFirstChild(playerName)
     if player then
         player:Kick("You have been kicked from the game. Reason: " .. reason)
+        -- Notify the action
+        local notificationId = NotificationService:CreateNotification(
+            "Player Kicked",
+            playerName .. " has been kicked from the game. Reason: " .. reason,
+            "rbxassetid://notification_icon"
+        )
+        NotificationService:SetNotificationIcon(notificationId, "rbxassetid://notification_icon")
+        NotificationService:SetCallback(notificationId, function()
+            -- Handle notification click if needed
+        end)
+        NotificationService:SetDuration(notificationId, 5) -- Display notification for 5 seconds
+        NotificationService:ShowNotification(notificationId)
     else
-        print("Player not found.")
+        -- Notify that the player is invalid
+        local notificationId = NotificationService:CreateNotification(
+            "Invalid Player",
+            "The specified player is invalid or has quit the game.",
+            "rbxassetid://notification_icon"
+        )
+        NotificationService:SetNotificationIcon(notificationId, "rbxassetid://notification_icon")
+        NotificationService:SetCallback(notificationId, function()
+            -- Handle notification click if needed
+        end)
+        NotificationService:SetDuration(notificationId, 5) -- Display notification for 5 seconds
+        NotificationService:ShowNotification(notificationId)
     end
 end
 
@@ -46,7 +72,5 @@ SubmitButton.MouseButton1Click:Connect(function()
     local reason = ReasonTextBox.Text
     if playerName ~= "" and reason ~= "" then
         KickPlayer(playerName, reason)
-    else
-        print("Please enter a player's name and reason for kick.")
     end
 end)
